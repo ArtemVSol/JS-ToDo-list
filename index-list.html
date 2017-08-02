@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Task list</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<style>
+		.task-list {
+			list-style: none;
+		}
+		.task-list li {
+			border: 2px solid orange;
+			border-radius: 3px;
+			width: 250px;
+			height: 20px;
+			margin-bottom: 5px;
+			padding-left: 3px;
+		}
+		.task-list li button {
+			float:right;
+		}
+		.task-done {
+			opacity: 0.5;
+			text-decoration: line-through;
+			display: none;
+		}
+		.hidden .task-done {
+			display: block;
+		}
+		#input-field {
+			margin-top: 20px;
+			margin-left: 40px;
+		}
+	</style>
+</head>
+<body>
+	<input id="input-field"type="text">
+	<button id="add-button">add!</button>
+	<button id="clear-button">clear</button>
+	<button id="show-hide-button">Show/Hide</button>
+
+	<ul class="task-list">
+		<li>1
+			<button class="remove-button">remove</button>
+			<button class="done-button">done</button>
+		</li>
+		<li>2
+			<button class="remove-button">remove</button>
+			<button class="done-button">done</button>
+		</li>
+		<li>3
+			<button class="remove-button">remove</button>
+			<button class="done-button">done</button>
+		</li>
+	</ul>
+	<script>
+
+		$('#add-button').click(function(){
+			console.log($('#input-field').val());
+			$('.task-list').prepend(
+				$(`<li>${$('input').val()}
+					<button class="remove-button">remove</button>
+					<button class="done-button">done</button>
+				</li>`));
+			saveList();
+		});
+
+		$('#clear-button').click(function() {
+			localStorage.clear();
+			location.reload();
+		});
+
+		$('#show-hide-button').click(function() {
+			$('.task-list').toggleClass('hidden');
+		});
+
+		$('.task-list').on('click', '.done-button', function(){
+			$(this).parent().toggleClass('task-done');
+			saveList()
+		});
+
+		$('.task-list').on('click', '.remove-button', function(){
+			$(this).parent().remove();
+			saveList();
+		});
+
+		function saveList() {
+			localStorage.app = $('.task-list').html();
+		};
+
+		$('.task-list').html(localStorage.app);
+
+	</script>
+</body>
+</html>
