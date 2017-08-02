@@ -1,1 +1,1 @@
-# JS-ToDo-list
+JS-ToDo-list with jQuery
